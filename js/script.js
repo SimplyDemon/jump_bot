@@ -3,10 +3,10 @@ function sleep(ms) {
 }
 
 start = new Date().getTime();
-
 terrain = window.terrain;
 character = window.character;
 const jumpDistance = 0; // always jumping
+
 async function stepForward() {
     character.jump();
     await sleep(200);
@@ -16,6 +16,8 @@ async function stepForward() {
 }
 
 function finish(status) {
+    isFinished = true;
+    $("#start_bot").removeAttr("disabled");
     let end = new Date().getTime();
     let rockPosition = terrain.rockPosition;
     let timeWasted = ((end - start) / 1000).toString();
@@ -52,4 +54,14 @@ function resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status) {
         },
 
     });
+}
+
+async function startBot() {
+    isFinished = false;
+    $("#start_bot").prop("disabled", true);
+    console.log(isFinished)
+    while (!isFinished) {
+        await stepForward();
+        await sleep(300);
+    }
 }
