@@ -15,7 +15,7 @@ async function stepForward() {
     character.stop();
 }
 
-function finish(result) {
+function finish(status) {
     let end = new Date().getTime();
     let rockPosition = terrain.rockPosition;
     let timeWasted = ((end - start) / 1000).toString();
@@ -25,5 +25,31 @@ function finish(result) {
     console.log(timeWasted);
     console.log(rockSize);
     console.log(jumpDistance);
-    console.log(result);
+    console.log(status);
+    resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status);
+}
+
+function resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status) {
+    console.log('rockPosition');
+    console.log(rockPosition);
+    console.log('timeWasted');
+    console.log(timeWasted);
+    let data = {
+        'rockPosition': rockPosition,
+        'timeWasted': timeWasted,
+        'rockSize': rockSize,
+        'jumpDistance': jumpDistance,
+        'status': status,
+    };
+
+    $.ajax({
+        method: 'post',
+        url: 'result-add.php',
+        data: data,
+        success: function (response) {
+            let responseJson = $.parseJSON(response);
+            console.log(responseJson['success']);
+        },
+
+    });
 }
