@@ -23,19 +23,10 @@ function finish(status) {
     let timeWasted = ((end - start) / 1000).toString();
     let rockSize = terrain.rockSize;
 
-    console.log(rockPosition);
-    console.log(timeWasted);
-    console.log(rockSize);
-    console.log(jumpDistance);
-    console.log(status);
     resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status);
 }
 
 function resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status) {
-    console.log('rockPosition');
-    console.log(rockPosition);
-    console.log('timeWasted');
-    console.log(timeWasted);
     let data = {
         'rockPosition': rockPosition,
         'timeWasted': timeWasted,
@@ -50,7 +41,6 @@ function resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status) {
         data: data,
         success: function (response) {
             let responseJson = $.parseJSON(response);
-            console.log(responseJson['success']);
         },
 
     });
@@ -59,7 +49,6 @@ function resultAdd(rockPosition, timeWasted, rockSize, jumpDistance, status) {
 async function startBot() {
     isFinished = false;
     $("#start_bot").prop("disabled", true);
-    console.log(isFinished)
     while (!isFinished) {
         await stepForward();
         await sleep(300);
